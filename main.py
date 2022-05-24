@@ -21,5 +21,9 @@ df_states = df[(~df["estado"].isna()) & (df["codmun"].isna())]
 
 df_brasil = df[df["regiao"] == "Brasil"]
 
+# exportando como csv
+df_brasil.to_csv("df_brasil.csv")
+df_brasil.to_csv("df_states.csv")
+
 
 
