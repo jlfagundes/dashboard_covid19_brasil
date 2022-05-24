@@ -1,7 +1,8 @@
 # iniciando o projeto
+from distutils.log import debug
 import dash # gerenciar o dashboard (criar servidor e manter layout)
-import dash_core_components as dcc # criar componentes, seleção de data, dropdown, etc...
-import dash_html_components as html # habilitar html no código
+from dash import dcc # criar componentes, seleção de data, dropdown, etc...
+from dash import html # habilitar html no código
 from dash.dependencies import Input, Output # interatividade
 import dash_bootstrap_components as dbc
 
@@ -30,7 +31,7 @@ import json
 df_states = pd.read_csv("./dataset/df_states.csv")
 df_brasil = pd.read_csv("./dataset/df_brasil.csv")
 
-df_states_date = df_states[df_states["data" == "2020-05-13"]]
+df_states_date = df_states[df_states["data"] == "2020-05-13"]
 
 # geojson
 brasil_states = json.load(open("./geojson/brazil_geo.json", "r"))
@@ -48,14 +49,27 @@ brasil_states = json.load(open("./geojson/brazil_geo.json", "r"))
 # dbc.themes criando o tema do dashboar
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG]) 
 
-# figer para armazenar o grafico do mapa
+# figure para armazenar o grafico do mapa
 # mapas do tipo choropleth tem as divisões especificadas
 # verificar colors na documentação do mapbox()
 fig  = px.choropleth_mapbox(df_states_date, locations="estado", color="casosNovos", geojson=brasil_states, color_continuous_scale="Redor", opacity=0.4, hover_data={"casosAcumulado": True, "casosNovos": True, "obitosNovos": True, "estado": True}, center={"lat": -16.95, "lon": -47.78})
 
+fig.update_layout(
+  mapbox_style="carto-darkmatter"
+)
 
 
+# criando o layout usando dbc layout
+
+app.layout = dbc.Container (
+  dbc.Row([
+    dbc.Col([
+      # componente do dash que guarda graficos
+      dcc.Graph(id="choropleth-map", figure=fig, )
+    ])
+  ])
+)
 
 
-
-
+if __name__ == "__main__":
+  app.run_server(debug=True)
