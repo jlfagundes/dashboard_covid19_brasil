@@ -33,6 +33,8 @@ df_brasil = pd.read_csv("./dataset/df_brasil.csv")
 
 df_states_date = df_states[df_states["data"] == "2020-05-13"]
 
+df_data = df_states[df_states["estado"] == "RJ"]
+
 # geojson
 brasil_states = json.load(open("./geojson/brazil_geo.json", "r"))
 
@@ -63,6 +65,16 @@ fig.update_layout(
   mapbox_style="carto-darkmatter" # estilo escolher na documentação
 )
 
+# criarndo segundo gráfico de outra forma
+fig2 = go.Figure(layout={"template": "plotly_dark"}) # criando uma Figure
+fig2.add_trace(go.Scatter(x=df_data["data"], y=df_data["casosAcumulado"])) # adicionando dataset, eixos x e y
+fig2.update_layout(
+  paper_bgcolor="#242424", # paleta de cores
+  plot_bgcolor="#242424",
+  margin=dict(l=10, r=10, t=10, b=10)
+
+)
+
 
 # criando o layout usando dbc layout
 
@@ -70,7 +82,10 @@ app.layout = dbc.Container (
   dbc.Row([
     dbc.Col([
       # componente do dash que guarda graficos
-      dcc.Graph(id="choropleth-map", figure=fig, )
+      dcc.Graph(id="line-graph", figure=fig2)
+    ]),
+    dbc.Col([
+      dcc.Graph(id="choropleth-map", figure=fig)
     ])
   ])
 )
