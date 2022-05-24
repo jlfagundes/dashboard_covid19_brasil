@@ -10,4 +10,7 @@ Projeto de um Dashboard desenvolvido com python que contém os dados da Covid 19
   <li>
     <a href="https://covid.saude.gov.br">Site do Governo Federal sobre a Covid-19</a>
   </li>
+  <li>
+    <a href="https://github.com/tbrugz/geodata-br">Geodata BR - Brasil</a>
+  </li>
 </ul>
