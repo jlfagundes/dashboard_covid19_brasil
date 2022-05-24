@@ -12,18 +12,37 @@ import numpy as np
 import pandas as pd
 import json
 
+# -- inicio do bloco comentado
+  # df = pd.read_csv("./dataset/HIST_PAINEL_COVIDBR_13mai2021.csv", sep=";")
 
-df = pd.read_csv("./dataset/HIST_PAINEL_COVIDBR_13mai2021.csv", sep=";")
+  # # "~" representa o operador binário NOT 
+  # # ref.: https://pt.stackoverflow.com/questions/543283/uso-do-acento-til-no-python
+  # df_states = df[(~df["estado"].isna()) & (df["codmun"].isna())]
 
-# "~" representa o operador binário NOT 
-# ref.: https://pt.stackoverflow.com/questions/543283/uso-do-acento-til-no-python
-df_states = df[(~df["estado"].isna()) & (df["codmun"].isna())]
+  # df_brasil = df[df["regiao"] == "Brasil"]
 
-df_brasil = df[df["regiao"] == "Brasil"]
+  # # exportando como csv
+  # df_brasil.to_csv("./dataset/df_brasil.csv")
+  # df_brasil.to_csv("./dataset/df_states.csv")
+# -- fim do bloco comentado
 
-# exportando como csv
-df_brasil.to_csv("df_brasil.csv")
-df_brasil.to_csv("df_states.csv")
+# importando novos datasets csv
+df_states = pd.read_csv("./dataset/df_states.csv")
+df_brasil = pd.read_csv("./dataset/df_brasil.csv")
+
+# geojson
+brasil_states = json.load(open("./geojson/brazil_geo.json", "r"))
+
+# -- inicio do bloco comentado
+  # type(brasil_states)
+  # brasil_states.keys() # verificando as chaves do dict
+  # type(brasil_states["features"]) # verificando o tipo da chave features
+  # type(brasil_states["features"][0]) # verificando o tipo do primeiro elemento da lista
+  # brasil_states["features"][0].keys() # verificando as chaves do primeiro elemento da lista que é um dict
+# -- fim do bloco comentado
+
+
+
 
 
 
