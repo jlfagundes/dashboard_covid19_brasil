@@ -7,7 +7,7 @@ from dash.dependencies import Input, Output # interatividade
 import dash_bootstrap_components as dbc
 
 import plotly.express as px # express permite criar graficos de forma mais simples
-import plotly.graph_objects as go # mais controle sobre graficos
+import plotly.graph_objs as go # mais controle sobre graficos
 
 import numpy as np
 import pandas as pd
@@ -52,10 +52,15 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 # figure para armazenar o grafico do mapa
 # mapas do tipo choropleth tem as divisões especificadas
 # verificar colors na documentação do mapbox()
-fig  = px.choropleth_mapbox(df_states_date, locations="estado", color="casosNovos", geojson=brasil_states, color_continuous_scale="Redor", opacity=0.4, hover_data={"casosAcumulado": True, "casosNovos": True, "obitosNovos": True, "estado": True}, center={"lat": -16.95, "lon": -47.78})
+fig  = px.choropleth_mapbox(df_states_date, locations="estado", color="casosNovos", geojson=brasil_states, color_continuous_scale="Redor", opacity=0.4, hover_data={"casosAcumulado": True, "casosNovos": True, "obitosNovos": True, "estado": True}, center={"lat": -16.95, "lon": -47.78}, zoom=4)
 
+# ref> https://plotly.com/python/reference/layout/
 fig.update_layout(
-  mapbox_style="carto-darkmatter"
+  paper_bgcolor="#242424", # paleta de cores
+  autosize=True,
+  margin=go.layout.Margin(l=0, r=0, t=0, b=0),
+  showlegend=False,
+  mapbox_style="carto-darkmatter" # estilo escolher na documentação
 )
 
 
