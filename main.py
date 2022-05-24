@@ -81,6 +81,26 @@ fig2.update_layout(
 app.layout = dbc.Container (
   dbc.Row([
     dbc.Col([
+      # usando tag HTML
+      html.Div([
+        html.Img(id="logo", alt="Logotipo da Empresa", src=app.get_asset_url("logo_cetti.png"), height=50),
+        html.H5("Evolução COVID-19"),
+        dbc.Button("BRASIL", color="primary", id="location-button", size="lg"),
+      ], style={}), # customizando a div
+
+      html.P("Informe a data na deseja obter informações:", style={"margin-top": "40px"}),
+
+      html.Div(id="div-test", children=[
+        dcc.DatePickerSingle(
+          id="date-picker",
+          min_date_allowed=df_brasil["data"].min(),
+          max_date_allowed=df_brasil["data"].max(),
+          date=df_brasil["data"].min(),
+          display_format="MMMM D, YYYY",
+          style={"border": "0px solid black"}
+        ) # objeto que permite escolher uma data
+      ]),
+
       # componente do dash que guarda graficos
       dcc.Graph(id="line-graph", figure=fig2)
     ]),
