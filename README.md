@@ -5,7 +5,7 @@ Projeto de um Dashboard desenvolvido com python que contém os dados da Covid 19
 
 Na construção deste Dashboard Interativo com os dados da COVID-19 no Brasil, desenvolvido em Python e utilizando Jupyter Notebook como ferramenta para análise e tratamento dos dados, tive a oportunidade de aprender um pouco sobre as biblitecas plotly, dash e dash-bootstrap-components, exercitei a softskill de como aprender a aprender e resolução de problema que me deparei durante o desenvolvimento deste projeto. Foi utilizado o Visual Studio Code, Git e Github.
 
-[![Gif de exemplo do projeto](assets/projeto_dashboard_covid-19.gif)
+![Gif de exemplo do projeto](assets/projeto_dashboard_covid-19.gif)
 
 #
 #### Para executar o projeto, siga os passoa abaixo:
