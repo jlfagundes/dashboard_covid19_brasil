@@ -165,7 +165,11 @@ app.layout = dbc.Container (
       ])
     ], md=5, style={"padding": "25px", "background-color": "#242424"}),
     dbc.Col([
-      dcc.Graph(id="choropleth-map", figure=fig)
+      # Criando loading para o map graph
+      dcc.Loading(id="loading-1", type="default",
+        children=[
+          dcc.Graph(id="choropleth-map", figure=fig, style={"height": "100vh", "margin-right": "10px"})
+        ]) # children = dentro do loading
     ], md=7)
   ])
 , fluid=True) # fluid para largura total
