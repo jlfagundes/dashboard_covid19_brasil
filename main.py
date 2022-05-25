@@ -78,8 +78,8 @@ fig2.add_trace(go.Scatter(x=df_data["data"], y=df_data["casosAcumulado"])) # adi
 fig2.update_layout(
   paper_bgcolor="#242424", # paleta de cores
   plot_bgcolor="#242424",
-  margin=dict(l=10, r=10, t=10, b=10)
-
+  margin=dict(l=10, r=10, t=10, b=10),
+  autosize=True
 )
 
 
@@ -174,7 +174,7 @@ app.layout = dbc.Container (
   ])
 , fluid=True) # fluid para largura total
 
-# interatividade
+# interatividade data and location
 
 # usando decoradores do dash as funções abaixo sabem o que utilizar
 @app.callback(
@@ -219,6 +219,43 @@ def display_status(date, location):
     obitos_acumulados,
     obitos_novos,
   )
+
+
+# interatividade graph dropdown
+@app.callback(
+  # se tem um output somente não passa lista []
+  Output("line-graph", "figure"),
+  # no input tem que ser lista []
+  [
+    Input("location-dropdown", "value"),
+    Input("location-button", "children")
+  ]
+)
+
+def plot_line_graph(plot_type, location):
+  if location == "BRASIL":
+    df_data_on_location = df_brasil.copy()
+  else:
+    df_data_on_location = df_states[df_states["estado"] == location]
+
+  # colunas que vão ter graph type bar
+  bar_plots = ["casosNovos", "obitosNovos"]
+
+  fig2 = go.Figure(layout={"template": "plotly_dark"})
+  if plot_type in bar_plots:
+    fig2.add_trace(go.Bar(x=df_data_on_location["data"], y=df_data_on_location[plot_type]))
+  else:
+    fig2.add_trace(go.Scatter(x=df_data_on_location["data"], y=df_data_on_location[plot_type]))
+
+  fig2.update_layout(
+    paper_bgcolor="#242424", # paleta de cores
+    plot_bgcolor="#242424",
+    autosize=True,
+    margin=dict(l=10, r=10, t=10, b=10)
+  )
+
+  return fig2
+
 
 
 if __name__ == "__main__":
