@@ -303,5 +303,26 @@ def update_map(date):
   return fig
 
 
+# tornar o mapa clicavel nos estados
+@app.callback(
+  Output("location-button", "children"),
+  [
+    Input("choropleth-map", "clickData"),
+    Input("location-button", "n_clicks") # "n_clicks" é uma forma de resetar o valor do botão
+  ]
+)
+
+def update_location(click_data, n_clicks):
+  # linha de código para pegar o ulitmo click que disparou o trigger da função
+  change_id = [p["prop_id"] for p in dash.callback_context.triggered][0]
+
+  if click_data is not None and change_id != "location-button.n_clicks":
+    state = click_data["points"][0]["location"]
+    return "{}".format(state) # retornar o estado em formato de string
+  else:
+    return "BRASIL"
+
+
+
 if __name__ == "__main__":
   app.run_server(debug=True)
