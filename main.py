@@ -101,6 +101,46 @@ app.layout = dbc.Container (
         ) # objeto que permite escolher uma data
       ]),
 
+      # criando os cards
+      dbc.Row([
+        dbc.Col([
+          dbc.Card([
+            dbc.CardBody([
+              html.Span("Casos recuperados"),
+              html.H3(style={"color": "#adfc92"}, id="casos-recuperados-text"),
+              html.Span("Em acompanhamento"),
+              html.H5(id="casos-em-acompanhamento-text"),
+            ])
+          ], color="light", outline=True, style={"margin-top": "10px",
+            "box-shadow": "0 4px 4px 0 rgba(0, 0, 0, 0.15), 0 4px 20px 0 rgba(0, 0, 0, 0.19)",
+            "color": "#FFFFFF"}) # color do boostrap dash
+        ], md=4), # md largura da coluna 4 ocupa 1 terço do espaço
+        dbc.Col([
+          dbc.Card([
+            dbc.CardBody([
+              html.Span("Casos confirmados totais"),
+              html.H3(style={"color": "#389fd6"}, id="casos-confirmados-text"),
+              html.Span("Novos casos na data"),
+              html.H5(id="novos-casos"),
+            ])
+          ], color="light", outline=True, style={"margin-top": "10px",
+            "box-shadow": "0 4px 4px 0 rgba(0, 0, 0, 0.15), 0 4px 20px 0 rgba(0, 0, 0, 0.19)",
+            "color": "#FFFFFF"}) 
+        ], md=4),
+        dbc.Col([
+          dbc.Card([
+            dbc.CardBody([
+              html.Span("Obitos confirmados"),
+              html.H3(style={"color": "#DF2935"}, id="obitos-confirmados-text"),
+              html.Span("Obitos na data"),
+              html.H5(id="obitos-data-text"),
+            ])
+          ], color="light", outline=True, style={"margin-top": "10px",
+            "box-shadow": "0 4px 4px 0 rgba(0, 0, 0, 0.15), 0 4px 20px 0 rgba(0, 0, 0, 0.19)",
+            "color": "#FFFFFF"}) 
+        ], md=4),
+      ]),
+
       # componente do dash que guarda graficos
       dcc.Graph(id="line-graph", figure=fig2)
     ]),
