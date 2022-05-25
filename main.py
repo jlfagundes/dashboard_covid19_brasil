@@ -1,5 +1,6 @@
 # iniciando o projeto
 from distutils.log import debug
+from gc import callbacks
 import dash # gerenciar o dashboard (criar servidor e manter layout)
 from dash import dcc # criar componentes, seleção de data, dropdown, etc...
 from dash import html # habilitar html no código
@@ -12,6 +13,8 @@ import plotly.graph_objs as go # mais controle sobre graficos
 import numpy as np
 import pandas as pd
 import json
+
+CENTER_LAT, CENTER_LON = -14.272572694355336, -51.25567404158474
 
 # -- inicio do bloco comentado
   # df = pd.read_csv("./dataset/HIST_PAINEL_COVIDBR_13mai2021.csv", sep=";")
@@ -61,7 +64,20 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.CYBORG])
 # figure para armazenar o grafico do mapa
 # mapas do tipo choropleth tem as divisões especificadas
 # verificar colors na documentação do mapbox()
-fig  = px.choropleth_mapbox(df_states_date, locations="estado", color="casosNovos", geojson=brasil_states, color_continuous_scale="Redor", opacity=0.4, hover_data={"casosAcumulado": True, "casosNovos": True, "obitosNovos": True, "estado": True}, center={"lat": -16.95, "lon": -47.78}, zoom=4)
+fig  = px.choropleth_mapbox(
+  df_states_date,
+  locations="estado",
+  color="casosNovos",
+  geojson=brasil_states,
+  color_continuous_scale="Redor",
+  opacity=0.4,
+  hover_data={
+    "casosAcumulado": True,
+    "casosNovos": True,
+    "obitosNovos": True,
+    "estado": True
+  },
+  center={"lat": CENTER_LAT, "lon": CENTER_LON}, zoom=4)
 
 # ref> https://plotly.com/python/reference/layout/
 fig.update_layout(
@@ -256,6 +272,35 @@ def plot_line_graph(plot_type, location):
 
   return fig2
 
+
+# interatividade com o mapa
+@app.callback(
+  Output("choropleth-map", "figure"),
+  [
+    Input("date-picker", "date")
+  ]
+)
+
+def update_map(date):
+  df_data_on_states = df_states[df_states["data"] == date]
+
+  fig = px.choropleth_mapbox(
+    df_data_on_states,
+    locations="estado",
+    color="casosNovos",
+    geojson=brasil_states,
+    color_continuous_scale="Redor",
+    opacity=0.4,
+    hover_data={
+      "casosAcumulado": True,
+      "casosNovos": True,
+      "obitosNovos": True,
+      "estado": True
+    },
+    center={"lat": CENTER_LAT, "lon": CENTER_LON}, zoom=4
+  )
+  
+  return fig
 
 
 if __name__ == "__main__":
