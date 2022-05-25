@@ -107,11 +107,11 @@ app.layout = dbc.Container (
       # usando tag HTML
       html.Div([
         html.Img(id="logo", alt="Logotipo da Empresa", src=app.get_asset_url("logo_cetti.png"), height=50),
-        html.H5("Evolução COVID-19"),
+        html.H5("Evolução COVID-19 no Brasil"),
         dbc.Button("BRASIL", color="primary", id="location-button", size="lg"),
       ], style={}), # customizando a div
 
-      html.P("Informe a data na deseja obter informações:", style={"margin-top": "40px"}),
+      html.P("Informe a data na deseja obter informações:", style={"margin-top": "20px"}),
 
       html.Div(id="div-test", children=[
         # objeto que permite escolher uma data
@@ -119,8 +119,8 @@ app.layout = dbc.Container (
           id="date-picker",
           min_date_allowed=df_brasil["data"].min(),
           max_date_allowed=df_brasil["data"].max(),
-          date=df_brasil["data"].min(),
-          display_format="MMMM D, YYYY",
+          date=df_brasil["data"].max(),
+          display_format="D MMMM, YYYY",
           style={"border": "0px solid black"}
         )
       ]),
@@ -132,7 +132,7 @@ app.layout = dbc.Container (
             dbc.CardBody([
               html.Span("Casos recuperados"),
               html.H3(style={"color": "#adfc92"}, id="casos-recuperados-text"),
-              html.Span("Em acompanhamento"),
+              html.Span("Acompanhamento"),
               html.H5(id="casos-em-acompanhamento-text"),
             ])
           ], color="light", outline=True, style={"margin-top": "10px",
@@ -142,9 +142,9 @@ app.layout = dbc.Container (
         dbc.Col([
           dbc.Card([
             dbc.CardBody([
-              html.Span("Casos confirmados totais"),
+              html.Span("Casos confirmados"),
               html.H3(style={"color": "#389fd6"}, id="casos-confirmados-text"),
-              html.Span("Novos casos na data"),
+              html.Span("Novos casos "),
               html.H5(id="novos-casos"),
             ])
           ], color="light", outline=True, style={"margin-top": "10px",
@@ -163,9 +163,7 @@ app.layout = dbc.Container (
             "box-shadow": "0 4px 4px 0 rgba(0, 0, 0, 0.15), 0 4px 20px 0 rgba(0, 0, 0, 0.19)",
             "color": "#FFFFFF"}) 
         ], md=4),
-      ]),
-
-      html.Div([
+      
         html.P("Selecione o tipo de dado que deseja visualizar", style={"margin-top": "25px"}),
 
         # Criando o dropDown
