@@ -98,6 +98,7 @@ app.layout = dbc.Container (
       html.P("Informe a data na deseja obter informações:", style={"margin-top": "40px"}),
 
       html.Div(id="div-test", children=[
+        # objeto que permite escolher uma data
         dcc.DatePickerSingle(
           id="date-picker",
           min_date_allowed=df_brasil["data"].min(),
@@ -105,7 +106,7 @@ app.layout = dbc.Container (
           date=df_brasil["data"].min(),
           display_format="MMMM D, YYYY",
           style={"border": "0px solid black"}
-        ) # objeto que permite escolher uma data
+        )
       ]),
 
       # criando os cards
@@ -150,6 +151,7 @@ app.layout = dbc.Container (
 
       html.Div([
         html.P("Selecione o tipo de dado que deseja visualizar", style={"margin-top": "25px"}),
+
         # Criando o dropDown
         dcc.Dropdown(id="location-dropdown",
           # laço for para percorrer array de colunas selecionadas, como opções
@@ -161,12 +163,12 @@ app.layout = dbc.Container (
         # componente do dash que guarda graficos
         dcc.Graph(id="line-graph", figure=fig2)
       ])
-    ]),
+    ], md=5, style={"padding": "25px", "background-color": "#242424"}),
     dbc.Col([
       dcc.Graph(id="choropleth-map", figure=fig)
-    ])
+    ], md=7)
   ])
-)
+, fluid=True) # fluid para largura total
 
 
 if __name__ == "__main__":
